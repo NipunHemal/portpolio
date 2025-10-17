@@ -257,6 +257,10 @@ body.dark-theme #theme-toggle-button .fa-moon {
 .hero-content {
   margin: 10vh 0 0 8vw;
   padding-top: 10vh;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  width: fit-content;
 }
 
 .hero-content h2 {
@@ -267,6 +271,7 @@ body.dark-theme #theme-toggle-button .fa-moon {
 }
 
 .badge {
+  width: fit-content;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -328,3 +333,8 @@ body.dark-theme #theme-toggle-button .fa-moon {
   line-height: 1;
   letter-spacing: 0.2em;
 }
+
+
+/* ======================================================
+    Hero Section Styles (Themed)
+========================================================= */
