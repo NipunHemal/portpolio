@@ -1,0 +1,330 @@
+/* ======================================================
+    Global & Reset Styles
+========================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* Use a system font for better performance, but Poppins is a good fallback */
+  font-family: "Poppins", sans-serif;
+}
+
+/* ======================================================
+    CSS Theme Variables Controlled by a Class
+========================================================= */
+
+:root {
+  /* Light Theme (Default) */
+  --background-color: #ffffff;
+  --text-color: #111111;
+  --primary-color: #000000;
+  --card-background: #f5f5f5;
+  --border-color: #d0d0d0;
+  --theme-transition: background-color 200ms ease-in-out,
+    color 200ms ease-in-out;
+}
+
+body.dark-theme {
+  /* Dark Theme */
+  --background-color: #000000;
+  --text-color: #f5f5f5;
+  --primary-color: #ffffff;
+  --card-background: #1a1a1a;
+  --border-color: #333333;
+}
+
+/* -- 3. Applying the Variables -- */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: system-ui, -apple-system, sans-serif;
+  transition: var(--theme-transition);
+}
+
+/* ======================================================
+    nav bar Styles for the Portfolio Page (Themed)
+========================================================= */
+
+/* Navigation Bar Container */
+.navbar {
+  width: 90%;
+  max-width: 1100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  /* --- FIXED POSITIONING & CENTERING --- */
+  position: fixed; /* Make the navbar stick to the viewport */
+  top: 20px; /* Spacing from the top of the viewport */
+  left: 50%; /* Start at the horizontal center */
+  transform: translateX(-50%); /* Move back by half its width to center */
+  z-index: 1000; /* Ensure it's above other content */
+
+  /* --- ANIMATION SETUP --- */
+  /* This transition handles the hide/show effect if triggered by a class (requires JS) */
+  /* OR a hover/focus state (pure CSS). We keep it for smooth movement. */
+  transition: transform 0.4s ease-in-out, background-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  /* --- THEME STYLES --- */
+  background-color: var(--card-background);
+  padding: 15px 30px;
+  border-radius: 50px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.nav-logo a {
+  /* Mapped to Theme Variable */
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 22px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 35px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-item a {
+  text-decoration: none;
+  /* Mapped to Theme Variable */
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 4px;
+  transition: color 0.3s ease;
+}
+
+.nav-item::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  /* Mapped to Theme Variable */
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%) scale(0);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-item:hover a,
+.nav-item.active a {
+  /* Mapped to Theme Variable */
+  color: var(--primary-color);
+}
+
+.nav-item:hover::after,
+.nav-item.active::after {
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+}
+
+.hamburger {
+  display: none; /* Hidden on desktop */
+  font-size: 24px;
+  background: none;
+  border: none;
+  /* Mapped to Theme Variable */
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+/* --- Theme Toggle Button (Themed) --- */
+#theme-toggle-button {
+  background: none;
+  border: none;
+  /* Mapped to Theme Variable */
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 20px;
+  padding: 5px;
+  position: relative;
+  width: 28px;
+  height: 28px;
+}
+
+#theme-toggle-button i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Dark theme state (default) */
+#theme-toggle-button .fa-moon {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+/* --- CORRECTED Icon Switching Logic --- */
+
+/* By default (in Light Mode), show the MOON, hide the SUN */
+/* The icon shows what you will switch TO */
+#theme-toggle-button .fa-sun {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+#theme-toggle-button .fa-moon {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+/* When body has the .dark-theme class, show the SUN, hide the MOON */
+body.dark-theme #theme-toggle-button .fa-sun {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+body.dark-theme #theme-toggle-button .fa-moon {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+/* ======================================================
+    Mobile Responsive Styles (Themed)
+========================================================= */
+@media (max-width: 768px) {
+  .navbar {
+    border-radius: 25px; /* Less pronounced curve on mobile */
+  }
+
+  .hamburger {
+    display: block; /* Show hamburger icon */
+    z-index: 1001; /* Make sure it's on top */
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Start off-screen */
+    width: 60%;
+    height: 100vh;
+    /* Mapped to Theme Variable for mobile menu background */
+    background-color: var(--card-background);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 20px;
+    transition: right 0.4s ease-in-out;
+    z-index: 1000;
+  }
+
+  .nav-menu.active {
+    right: 0; /* Slide in */
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .nav-item::after {
+    bottom: -8px; /* Adjust dot position for larger mobile text */
+  }
+}
+
+/* ======================================================
+    Hero Section Styles (Themed)
+========================================================= */
+
+.hero-section {
+  margin-top: 100px;
+  height: calc(100vh - 100px);
+  position: relative;
+}
+
+/*  hero content */
+.hero-content {
+  margin: 10vh 0 0 8vw;
+  padding-top: 10vh;
+}
+
+.hero-content h2 {
+  font-size: clamp(1.5rem, 3vw, 38px);
+  color: var(--primary-color);
+  font-weight: 700;
+  max-width: 40vw;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  font-size: 0.875rem;
+  backdrop-filter: blur(10px);
+}
+
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  background: #3b82f6;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.badge.sm {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.625rem;
+}
+
+.main-title .left-badge {
+  float: right;
+  margin-right: 2rem;
+}
+
+.hero-image {
+  position: absolute;
+  width: fit-content;
+  top: -70px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: -1;
+}
+
+.hero-image img {
+  object-fit: cover;
+  width: 100%;
+}
+
+.hero-section .main-title {
+  position: absolute;
+  bottom: 10%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-section .main-title h1 {
+  text-align: center;
+  font-size: 48px;
+  font-size: clamp(4rem, 20vw, 24rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.2em;
+}
